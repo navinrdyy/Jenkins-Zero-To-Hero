@@ -17,5 +17,13 @@ pipeline {
         sh 'node --version'
       }
     }
+    stage('DB') {
+      agent {
+        docker { image 'mysql:8-oracle' }
+      }
+      steps {
+        select * from sys.databases
+      }
+    }
   }
 }
