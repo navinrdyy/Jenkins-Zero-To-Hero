@@ -9,11 +9,11 @@ pipeline {
                 git branch: 'test', url: 'https://github.com/navinrdyy/Jenkins-Zero-To-Hero.git'
             }
         }
-         stage('Compile Java'){
-            steps{
-                sh 'javac HelloWorld.java'
-            }
-        }
+        //  stage('Compile Java'){
+        //     steps{
+        //         sh 'javac HelloWorld.java'
+        //     }
+        // }
         stage('Build Docker Image'){
             steps{
                 script{
