@@ -1,43 +1,33 @@
 pipeline {
-    agent {
-        docker {
-            image 'openjdk:17' // You can change this to any Java version you need
-            // label 'docker'     // Optional: specify a node label if needed
+    agent any {
+        environment {
+            IMAGE_NAME="java-test-docker"
         }
-    }
-
-    stages {
-        stage('Prepare') {
-            steps {
-                echo 'Creating HelloWorld.java...'
-                writeFile file: 'HelloWorld.java', text: '''
-public class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World from Docker!");
-    }
-}
-'''
+        stages{
+            stage('Clone Repository'){
+                steps{
+                    git branch: 'test', url: 'https://github.com/navinrdyy/Jenkins-Zero-To-Hero'
+                }
             }
-        }
-
-        stage('Compile') {
-            steps {
-                echo 'Compiling Java program...'
-                sh 'javac HelloWorld.java'
+            stage('Compile Java'){
+                steps{
+                    sh 'javac HelloWorld.java'
+                }
             }
-        }
-
-        stage('Run') {
-            steps {
-                echo 'Running Java program...'
-                sh 'java HelloWorld'
+            stage('Build Docker Image'){
+                steps{
+                    script{
+                        sh "docker build -t ${IMAGE_NAME}:latest"
+                    }
+                }
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline finished.'
+            stage('Run Docker Image'){
+                steps{
+                    script{
+                        sh "docker run --rm ${IMAGE_NAME}:latest"
+                    }
+                }
+            }
         }
     }
 }
