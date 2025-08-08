@@ -42,7 +42,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry("https://${DOCKER_REGISTRY}", 'docker-credentials-id') {
+                    docker.withRegistry("https://${DOCKER_REGISTRY}") {
                         docker.image("${IMAGE_NAME}").push()
                     }
                 }
