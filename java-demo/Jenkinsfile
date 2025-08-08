@@ -23,7 +23,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = myjavademo
+        IMAGE_NAME = 'myjavademo'
         DOCKER_REGISTRY = 'https://github.com/navinrdyy/Jenkins-Zero-To-Hero/blob/test/java-demo/Dockerfile' // optional
     }
     
