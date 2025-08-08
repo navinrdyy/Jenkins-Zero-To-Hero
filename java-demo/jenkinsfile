@@ -1,1 +1,13 @@
-
+    // Example Groovy script in a Jenkinsfile to build a Docker image
+    pipeline {
+        agent any
+        stages {
+            stage('Build Docker Image') {
+                steps {
+                    script {
+                        docker.build("my-java-app:latest")
+                    }
+                }
+            }
+        }
+    }
