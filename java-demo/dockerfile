@@ -2,7 +2,7 @@
 FROM openjdk:17-jdk-slim
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /home/naveeman/.jenkins/workspace/java_demo
 
 # Copy the Java source file into the container
 COPY HelloWorld.java .
