@@ -1,20 +1,54 @@
-    // Example Groovy script in a Jenkinsfile to build a Docker image
-    pipeline {
-        agent any
-        stages {
-            stage('Build Docker Image') {
-                steps {
-                    script {
-                        docker.build("myjavademo:latest")
-                    }
+    // // Example Groovy script in a Jenkinsfile to build a Docker image
+    // pipeline {
+    //     agent any
+    //     stages {
+    //         stage('Build Docker Image') {
+    //             steps {
+    //                 script {
+    //                     docker.build("myjavademo:latest")
+    //                 }
+    //             }
+    //         }
+    //         stage('Run the Docker Image'){
+    //             steps {
+    //                 script{
+    //                     docker run myjavademo
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = myjavademo
+        DOCKER_REGISTRY = https://github.com/navinrdyy/Jenkins-Zero-To-Hero/blob/test/java-demo/Dockerfile // optional
+    }
+    
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${IMAGE_NAME}")
                 }
             }
-            stage('Run the Docker Image'){
-                steps {
-                    script{
-                        docker run myjavademo
+        }
+
+        stage('Push Docker Image') {
+            when {
+                expression { return env.DOCKER_REGISTRY != '' }
+            }
+            steps {
+                script {
+                    docker.withRegistry("https://${DOCKER_REGISTRY}", 'docker-credentials-id') {
+                        docker.image("${IMAGE_NAME}").push()
                     }
                 }
             }
         }
+
     }
+}
+
