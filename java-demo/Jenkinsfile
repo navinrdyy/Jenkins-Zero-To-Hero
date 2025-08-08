@@ -1,54 +1,32 @@
-    // // Example Groovy script in a Jenkinsfile to build a Docker image
-    // pipeline {
-    //     agent any
-    //     stages {
-    //         stage('Build Docker Image') {
-    //             steps {
-    //                 script {
-    //                     docker.build("myjavademo:latest")
-    //                 }
-    //             }
-    //         }
-    //         stage('Run the Docker Image'){
-    //             steps {
-    //                 script{
-    //                     docker run myjavademo
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = 'myjavademo'
-        DOCKER_REGISTRY = 'https://github.com/navinrdyy/Jenkins-Zero-To-Hero/blob/test/java-demo/Dockerfile' // optional
-    }
-    
     stages {
-        stage('Build Docker Image') {
+        stage('Checkout') {
             steps {
-                script {
-                    docker.build("${IMAGE_NAME}")
-                }
+                // Assuming your HelloWorld.java is in the repo
+                checkout scm
             }
         }
 
-        stage('Push Docker Image') {
-            when {
-                expression { return env.DOCKER_REGISTRY != '' }
-            }
+        stage('Compile') {
             steps {
-                script {
-                    docker.withRegistry("https://${DOCKER_REGISTRY}") {
-                        docker.image("${IMAGE_NAME}").push()
-                    }
-                }
+                echo 'Compiling Java program...'
+                sh 'javac HelloWorld.java'
             }
         }
 
+        stage('Run') {
+            steps {
+                echo 'Running Java program...'
+                sh 'java HelloWorld'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
     }
 }
-
