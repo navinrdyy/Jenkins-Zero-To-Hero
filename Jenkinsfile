@@ -6,7 +6,7 @@ pipeline {
     stages{
         stage('Clone Repository'){
             steps{
-                git branch: 'test', url: 'https://github.com/navinrdyy/Jenkins-Zero-To-Hero/java-demo.git'
+                git branch: 'test', url: 'https://github.com/navinrdyy/Jenkins-Zero-To-Hero.git'
             }
         }
         //  stage('Compile Java'){
