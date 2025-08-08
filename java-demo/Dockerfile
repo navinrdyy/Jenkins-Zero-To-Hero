@@ -1,5 +1,5 @@
 # Use a base image with Java Development Kit (JDK) pre-installed
-#FROM openjdk:17-jdk-slim
+FROM openjdk:17-jdk-slim
 
 # Set the working directory inside the container
 #WORKDIR /home/naveeman/.jenkins/workspace/java_demo
