@@ -5,14 +5,14 @@
             stage('Build Docker Image') {
                 steps {
                     script {
-                        docker.build("my-java-app:latest")
+                        docker.build("myjavademo:latest")
                     }
                 }
             }
             stage('Run the Docker Image'){
                 steps {
                     script{
-                        docker run my-java-app
+                        docker run myjavademo
                     }
                 }
             }
