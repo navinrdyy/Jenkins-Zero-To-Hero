@@ -1,11 +1,22 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'openjdk:17' // You can change this to any Java version you need
+            label 'docker'     // Optional: specify a node label if needed
+        }
+    }
 
     stages {
-        stage('Checkout') {
+        stage('Prepare') {
             steps {
-                // Assuming your HelloWorld.java is in the repo
-                checkout scm
+                echo 'Creating HelloWorld.java...'
+                writeFile file: 'HelloWorld.java', text: '''
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World from Docker!");
+    }
+}
+'''
             }
         }
 
@@ -26,7 +37,7 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline execution completed.'
+            echo 'Pipeline finished.'
         }
     }
 }
