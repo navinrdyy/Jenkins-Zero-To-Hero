@@ -9,5 +9,12 @@
                     }
                 }
             }
+            stage('Run the Docker Image'){
+                steps {
+                    script{
+                        docker run my-java-app
+                    }
+                }
+            }
         }
     }
