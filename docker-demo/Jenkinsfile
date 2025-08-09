@@ -19,7 +19,7 @@ pipeline {
                 script{
                     echo 'Building the docker right now ....'
                     // sh "docker build -t ${IMAGE_NAME}."
-                    docker.build('java-test-docker', '.')
+                    docker.build('java-test-docker', 'docker-demo')
                 }
             }
         }
