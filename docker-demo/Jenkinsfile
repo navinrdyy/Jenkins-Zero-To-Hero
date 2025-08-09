@@ -1,0 +1,33 @@
+pipeline {
+    agent any 
+    environment {
+        IMAGE_NAME="java-test-docker"
+    }
+    stages{
+        stage('Clone Repository'){
+            steps{
+                git branch: 'test', url: 'https://github.com/navinrdyy/Jenkins-Zero-To-Hero.git'
+            }
+        }
+        //  stage('Compile Java'){
+        //     steps{
+        //         sh 'javac HelloWorld.java'
+        //     }
+        // }
+        stage('Build Docker Image'){
+            steps{
+                script{
+                    echo 'Building the docker right now ....'
+                    sh "docker build -t ${IMAGE_NAME} ."
+                }
+            }
+        }
+        stage('Run Docker Image'){
+            steps{
+                script{
+                    sh "docker run --rm ${IMAGE_NAME}"
+                }
+            }
+        }
+    }
+}
