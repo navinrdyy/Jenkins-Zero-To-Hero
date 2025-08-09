@@ -7,7 +7,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /
 
 # Copy the Java source file into the container
-COPY /home/naveeman/HelloWorld.java .
+#COPY /home/naveeman/HelloWorld.java .
 
 # Compile the Java source file
 RUN javac HelloWorld.java
